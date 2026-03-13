@@ -5,6 +5,71 @@
     <title>H-Town Jam Vol. 2 — Registration</title>
     <link rel="stylesheet" href="style.css" />
   </head>
+
+  <div
+    id="modal-overlay"
+    style="
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+    "
+  >
+    <div
+      style="
+        background: #fff;
+        border-radius: 16px;
+        padding: 2rem;
+        max-width: 380px;
+        width: 90%;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      "
+    >
+      <div id="modal-icon" style="font-size: 40px; margin-bottom: 12px"></div>
+      <h3
+        id="modal-title"
+        style="
+          font-size: 18px;
+          font-weight: 600;
+          color: #1a1a2e;
+          margin-bottom: 8px;
+        "
+      ></h3>
+      <p
+        id="modal-message"
+        style="
+          font-size: 14px;
+          color: #666;
+          line-height: 1.6;
+          margin-bottom: 1.5rem;
+        "
+      ></p>
+      <button
+        id="modal-btn"
+        onclick="closeModal()"
+        style="
+          background: #ff8c00;
+          color: white;
+          border: none;
+          border-radius: 10px;
+          padding: 12px 32px;
+          font-size: 14px;
+          font-weight: 500;
+          cursor: pointer;
+        "
+      >
+        OK
+      </button>
+    </div>
+  </div>
   <body>
     <div class="page">
       <div class="hero">
@@ -107,14 +172,16 @@
           <span>Payment</span>
         </div>
         <div class="card-body">
-          <div class="field">
-            <label>Registration Fee</label>
-            <input type="text" placeholder="Amount to be confirmed" />
-          </div>
           <div class="payment-note">
-            Secure payment is processed upon submission.
-            <strong
-              >All fees are final — no refunds will be issued under any
+            <strong style="font-size: 15px; color: #333"
+              >Registration Fee: $350 per team</strong
+            >
+            <br /><br />
+            Payment is collected via <strong>PayPal</strong>. After submitting
+            your registration, you will be redirected to PayPal to complete your
+            $350 payment. <br /><br />
+            <strong style="color: #a32d2d"
+              >⚠ All fees are final — NO REFUNDS will be issued under any
               circumstances.</strong
             >
           </div>
@@ -160,14 +227,30 @@
         </div>
       </div>
 
-      <button class="submit-btn">Complete Registration & Pay</button>
+      <button class="submit-btn">Complete Registration & Pay $350</button>
       <p class="footer-note">
-        By submitting this form you agree to all terms above.<br />More details
-        will be sent after registration closes.
+        By submitting this form you agree to all terms above.<br />
+        You will be redirected to PayPal to complete your $350 payment.
       </p>
     </div>
 
     <script>
+      function showModal(icon, title, message, callback) {
+        document.getElementById("modal-icon").textContent = icon;
+        document.getElementById("modal-title").textContent = title;
+        document.getElementById("modal-message").textContent = message;
+        document.getElementById("modal-overlay").style.display = "flex";
+        window._modalCallback = callback || null;
+      }
+
+      function closeModal() {
+        document.getElementById("modal-overlay").style.display = "none";
+        if (window._modalCallback) {
+          window._modalCallback();
+          window._modalCallback = null;
+        }
+      }
+
       document
         .querySelector(".submit-btn")
         .addEventListener("click", async function (e) {
@@ -193,21 +276,39 @@
           const w3 = document.querySelector("#w3").checked;
           const w4 = document.querySelector("#w4").checked;
 
-          // Validation
-          if (
-            !teamName ||
-            !players ||
-            !captainName ||
-            !email ||
-            !phone ||
-            !uniform
-          ) {
-            alert("Please fill in all fields!");
+          if (!teamName || !captainName || !email || !phone) {
+            showModal(
+              "⚠️",
+              "Missing Fields",
+              "Please fill in all required fields before submitting.",
+            );
+            return;
+          }
+
+          if (players === "Select number of players") {
+            showModal(
+              "⚠️",
+              "Missing Fields",
+              "Please select the number of players.",
+            );
+            return;
+          }
+
+          if (uniform === "Select uniform status") {
+            showModal(
+              "⚠️",
+              "Missing Fields",
+              "Please select your uniform status.",
+            );
             return;
           }
 
           if (!w1 || !w2 || !w3 || !w4) {
-            alert("Please agree to all terms and waiver before submitting!");
+            showModal(
+              "📋",
+              "Agreement Required",
+              "Please agree to all terms and waiver before submitting.",
+            );
             return;
           }
 
@@ -233,15 +334,26 @@
               },
             );
 
-            btn.textContent = "Registration Submitted!";
+            btn.textContent = "Registration Submitted! ✓";
             btn.style.background = "#1D9E75";
-            alert(
-              "You have successfully registered for H-Town Jam Vol. 2! More details will be sent after registration closes.",
+
+            showModal(
+              "🎉",
+              "Registration Successful!",
+              "You have successfully registered for H-Town Jam Vol. 2! You will now be redirected to PayPal to complete your $350 payment.",
+              function () {
+                window.location.href =
+                  "https://www.paypal.com/ncp/payment/RQDP9DTVHMU8E";
+              },
             );
           } catch (error) {
-            btn.textContent = "Complete Registration & Pay";
+            btn.textContent = "Complete Registration & Pay $350";
             btn.disabled = false;
-            alert("Something went wrong. Please try again.");
+            showModal(
+              "❌",
+              "Something Went Wrong",
+              "We could not submit your registration. Please try again.",
+            );
           }
         });
     </script>
