@@ -92,6 +92,31 @@
           <div class="alert-value">NO REFUNDS</div>
         </div>
       </div>
+      <!-- Countdown Timer -->
+      <div class="countdown-wrap">
+        <div class="countdown-title">⏳ Registration Closes In</div>
+        <div class="countdown-timer">
+          <div class="countdown-block">
+            <span id="cd-days">00</span>
+            <label>Days</label>
+          </div>
+          <div class="countdown-sep">:</div>
+          <div class="countdown-block">
+            <span id="cd-hours">00</span>
+            <label>Hours</label>
+          </div>
+          <div class="countdown-sep">:</div>
+          <div class="countdown-block">
+            <span id="cd-mins">00</span>
+            <label>Minutes</label>
+          </div>
+          <div class="countdown-sep">:</div>
+          <div class="countdown-block">
+            <span id="cd-secs">00</span>
+            <label>Seconds</label>
+          </div>
+        </div>
+      </div>
 
       <div class="card">
         <div class="card-header">
@@ -356,6 +381,65 @@
             );
           }
         });
+      // Auto close registration on May 24, 2026
+      const deadline = new Date("2026-05-24T23:59:59");
+      const now = new Date();
+
+      if (now > deadline) {
+        document.querySelector(".page").innerHTML = `
+    <div style="text-align:center; padding:3rem 1rem;">
+      <div style="font-size:60px; margin-bottom:1rem;">🏀</div>
+      <h2 style="font-size:24px; font-weight:600; color:#1a1a2e; margin-bottom:12px;">Registration Closed</h2>
+      <p style="font-size:15px; color:#666; line-height:1.8;">
+        Registration for <strong>H-Town Jam Vol. 2</strong> closed on <strong style="color:#a32d2d;">May 24, 2026</strong>.<br/>
+        Thank you to all teams who registered!
+      </p>
+      <div style="margin-top:2rem; padding:16px; background:#fff8f0; border:1px solid #ff8c00; border-radius:12px; font-size:13px; color:#633806;">
+        For more information, please contact the tournament organizer.
+      </div>
+    </div>
+  `;
+      }
+      // Countdown Timer
+      function updateCountdown() {
+        const deadline = new Date("2026-05-24T23:59:59");
+        const now = new Date();
+        const diff = deadline - now;
+
+        if (diff <= 0) {
+          document.querySelector(".countdown-wrap").innerHTML = `
+      <div style="color:#a32d2d; font-weight:600; font-size:15px;">
+        🔴 Registration is now closed
+      </div>`;
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+        );
+        const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById("cd-days").textContent = String(days).padStart(
+          2,
+          "0",
+        );
+        document.getElementById("cd-hours").textContent = String(
+          hours,
+        ).padStart(2, "0");
+        document.getElementById("cd-mins").textContent = String(mins).padStart(
+          2,
+          "0",
+        );
+        document.getElementById("cd-secs").textContent = String(secs).padStart(
+          2,
+          "0",
+        );
+      }
+
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
     </script>
   </body>
 </html>
