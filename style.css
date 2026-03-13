@@ -3,6 +3,7 @@
   margin: 0;
   padding: 0;
 }
+
 .page {
   font-family: "Poppins", Arial, sans-serif;
   max-width: 640px;
@@ -11,6 +12,12 @@
   border: 1px solid #ff8c00;
   border-radius: 16px;
   background: #ffffff;
+}
+input,
+select,
+button,
+textarea {
+  font-family: "Poppins", Arial, sans-serif;
 }
 .hero {
   background: #1a1a2e;
@@ -66,58 +73,12 @@
   margin: 5px auto;
 }
 
-.alerts {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-bottom: 1.5rem;
-}
-.alert-box {
-  border-radius: 10px;
-  padding: 12px;
-  text-align: center;
-}
-.alert-deadline {
-  background: #fff8f0;
-  border: 1px solid #ff8c00;
-}
-.alert-deadline .alert-label {
-  font-size: 11px;
-  color: #ba7517;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.alert-deadline .alert-value {
-  font-size: 14px;
-  font-weight: 500;
-  color: #633806;
-  margin-top: 4px;
-}
-.alert-refund {
-  background: #fff0f0;
-  border: 1px solid #e24b4a;
-}
-.alert-refund .alert-label {
-  font-size: 11px;
-  color: #a32d2d;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.alert-refund .alert-value {
-  font-size: 14px;
-  font-weight: 500;
-  color: #a32d2d;
-  margin-top: 4px;
-}
-
 .card {
   background: var(--color-background-primary);
   border: 0.5px solid var(--color-border-tertiary);
   border-radius: 12px;
   margin-bottom: 1rem;
-  overflow: hidden;
+  overflow: visible;
 }
 .card-header {
   background: #1a1a2e;
@@ -198,15 +159,101 @@
   box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.12);
 }
 
-.field select {
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ff8c00' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 14px center;
-  padding-right: 36px;
-  cursor: pointer;
+.custom-select {
+  position: relative;
+  width: 100%;
+  user-select: none;
 }
 
+.custom-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 14px;
+  background: #fafafa;
+  color: #bbb;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.custom-select-trigger.selected {
+  color: #333;
+}
+
+.custom-select-trigger:hover {
+  border-color: #ffb347;
+  background: #fff;
+}
+
+.custom-select.open .custom-select-trigger {
+  border-color: #ff8c00;
+  box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.12);
+}
+
+.custom-select.open .custom-select-trigger svg {
+  transform: rotate(180deg);
+}
+
+.custom-select-trigger svg {
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.custom-options {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 100%;
+  background: #1a1a2e;
+  border: 1.5px solid #ff8c00;
+  border-radius: 12px;
+  overflow: hidden;
+  z-index: 100;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.custom-select.open .custom-options {
+  display: block;
+}
+
+.custom-option {
+  padding: 11px 16px;
+  font-size: 14px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.06);
+}
+
+.custom-option:last-child {
+  border-bottom: none;
+}
+
+.custom-option:hover {
+  background: rgba(255, 140, 0, 0.15);
+  color: #ff8c00;
+}
+
+.custom-option.selected-opt {
+  background: rgba(255, 140, 0, 0.2);
+  color: #ff8c00;
+  font-weight: 500;
+}
+
+.custom-option.placeholder-opt {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 13px;
+  cursor: default;
+}
+
+.custom-option.placeholder-opt:hover {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.3);
+}
 .two-col {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -441,12 +488,12 @@ body::before {
 }
 
 .alert-refund {
-  border-top: 3px solid #e24b4a;
+  border-top: 3px solid #fc0a0a;
 }
 
 .alert-refund .alert-label {
   font-size: 11px;
-  color: #a32d2d;
+  color: #fc0a0a;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -455,7 +502,7 @@ body::before {
 .alert-refund .alert-value {
   font-size: 15px;
   font-weight: 600;
-  color: #a32d2d;
+  color: #fc0a0a;
   margin-top: 4px;
 }
 @media (max-width: 480px) {
