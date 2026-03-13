@@ -1,0 +1,249 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>H-Town Jam Vol. 2 — Registration</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="page">
+      <div class="hero">
+        <div class="hero-content">
+          <span class="ball-icon">🏀</span>
+          <h1>H-Town Jam Vol. 2</h1>
+          <div class="orange-line"></div>
+          <p>Basketball Tournament — Team Registration</p>
+        </div>
+        <img src="logo.png" alt="H-Town Jam Logo" class="hero-logo" />
+      </div>
+
+      <div class="alerts">
+        <div class="alert-box alert-deadline">
+          <div class="alert-label">Registration Closes</div>
+          <div class="alert-value">May 24, 2025</div>
+        </div>
+        <div class="alert-box alert-refund">
+          <div class="alert-label">Refund Policy</div>
+          <div class="alert-value">NO REFUNDS</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="step-badge">1</div>
+          <span>Team Information</span>
+        </div>
+        <div class="card-body">
+          <div class="field">
+            <label>Team Name</label>
+            <input type="text" placeholder="Enter your team name" />
+          </div>
+          <div class="field">
+            <label>Number of Players</label>
+            <select>
+              <option>Select number of players</option>
+              <option>5</option>
+              <option>6</option>
+              <option>7</option>
+              <option>8</option>
+              <option>9</option>
+              <option>10</option>
+              <option>11</option>
+              <option>12</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="step-badge">2</div>
+          <span>Captain Information</span>
+        </div>
+        <div class="card-body">
+          <div class="field">
+            <label>Captain Full Name</label>
+            <input type="text" placeholder="Full name" />
+          </div>
+          <div class="two-col">
+            <div class="field">
+              <label>Contact Email</label>
+              <input type="email" placeholder="captain@email.com" />
+            </div>
+            <div class="field">
+              <label>Phone Number</label>
+              <input type="tel" placeholder="+1 (000) 000-0000" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="step-badge">3</div>
+          <span>Uniform Requirements</span>
+        </div>
+        <div class="card-body">
+          <div class="uniform-notice">
+            <strong>All players must wear matching uniforms</strong> with
+            numbers on both top and bottom. If your team does not have matching
+            uniforms, jerseys will be provided for
+            <strong>$15 per player</strong>.
+          </div>
+          <div class="field">
+            <label>Uniform Status</label>
+            <select>
+              <option>Select uniform status</option>
+              <option>We have matching uniforms with numbers</option>
+              <option>We need jerseys ($15 per player)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="step-badge">4</div>
+          <span>Payment</span>
+        </div>
+        <div class="card-body">
+          <div class="field">
+            <label>Registration Fee</label>
+            <input type="text" placeholder="Amount to be confirmed" />
+          </div>
+          <div class="payment-note">
+            Secure payment is processed upon submission.
+            <strong
+              >All fees are final — no refunds will be issued under any
+              circumstances.</strong
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="step-badge">5</div>
+          <span>Agreements & Waiver</span>
+        </div>
+        <div class="card-body">
+          <div class="waiver-item">
+            <input type="checkbox" id="w1" />
+            <label for="w1"
+              >I agree that <strong>NO FIGHTING</strong> is permitted. Any team
+              involved in fighting will be immediately disqualified with no
+              refund.</label
+            >
+          </div>
+          <div class="waiver-item">
+            <input type="checkbox" id="w2" />
+            <label for="w2"
+              >I acknowledge that a
+              <strong>signed waiver must be brought</strong> to the tournament
+              on the day of the event.</label
+            >
+          </div>
+          <div class="waiver-item">
+            <input type="checkbox" id="w3" />
+            <label for="w3"
+              >I understand that <strong>NO REFUNDS</strong> will be issued
+              under any circumstances.</label
+            >
+          </div>
+          <div class="waiver-item">
+            <input type="checkbox" id="w4" />
+            <label for="w4"
+              >I understand that more details will be sent out once registration
+              has closed.</label
+            >
+          </div>
+        </div>
+      </div>
+
+      <button class="submit-btn">Complete Registration & Pay</button>
+      <p class="footer-note">
+        By submitting this form you agree to all terms above.<br />More details
+        will be sent after registration closes.
+      </p>
+    </div>
+
+    <script>
+      document
+        .querySelector(".submit-btn")
+        .addEventListener("click", async function (e) {
+          e.preventDefault();
+
+          const teamName = document.querySelector(
+            'input[placeholder="Enter your team name"]',
+          ).value;
+          const players = document.querySelector("select").value;
+          const captainName = document.querySelector(
+            'input[placeholder="Full name"]',
+          ).value;
+          const email = document.querySelector(
+            'input[placeholder="captain@email.com"]',
+          ).value;
+          const phone = document.querySelector(
+            'input[placeholder="+1 (000) 000-0000"]',
+          ).value;
+          const uniform = document.querySelectorAll("select")[1].value;
+
+          const w1 = document.querySelector("#w1").checked;
+          const w2 = document.querySelector("#w2").checked;
+          const w3 = document.querySelector("#w3").checked;
+          const w4 = document.querySelector("#w4").checked;
+
+          // Validation
+          if (
+            !teamName ||
+            !players ||
+            !captainName ||
+            !email ||
+            !phone ||
+            !uniform
+          ) {
+            alert("Please fill in all fields!");
+            return;
+          }
+
+          if (!w1 || !w2 || !w3 || !w4) {
+            alert("Please agree to all terms and waiver before submitting!");
+            return;
+          }
+
+          const btn = document.querySelector(".submit-btn");
+          btn.textContent = "Submitting...";
+          btn.disabled = true;
+
+          try {
+            await fetch(
+              "https://script.google.com/macros/s/AKfycbyZdv3xpfgBowm8HZhWywEhLaCGmf9OdZ9Gr0Y_SDwE_7hwdId0udOMaekZ-dHGNlkTMw/exec",
+              {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  teamName,
+                  players,
+                  captainName,
+                  email,
+                  phone,
+                  uniform,
+                }),
+              },
+            );
+
+            btn.textContent = "Registration Submitted!";
+            btn.style.background = "#1D9E75";
+            alert(
+              "You have successfully registered for H-Town Jam Vol. 2! More details will be sent after registration closes.",
+            );
+          } catch (error) {
+            btn.textContent = "Complete Registration & Pay";
+            btn.disabled = false;
+            alert("Something went wrong. Please try again.");
+          }
+        });
+    </script>
+  </body>
+</html>
